@@ -10,8 +10,7 @@ main();
      console.log('player.js has loaded!')
  }
 
-last commit.
-    Rearrange the code and add a main function
+
 
 const getTooltipStr = (content,id,classes,placement)=>{
     let vertical = "top"
