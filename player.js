@@ -10,6 +10,8 @@ main();
      console.log('player.js has loaded!')
  }
 
+last commit.
+    Rearrange the code and add a main function
 
 const getTooltipStr = (content,id,classes,placement)=>{
     let vertical = "top"
@@ -30,16 +32,12 @@ const getTooltipStr = (content,id,classes,placement)=>{
     return html
 }
 
-// To make the load sync
-
-
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
  async function loadJquery(){
-
     let jq = document.createElement('script');
     jq.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js";
     document.getElementsByTagName('head')[0].appendChild(jq);
@@ -47,7 +45,6 @@ function sleep(ms) {
     while(typeof(window.jQuery) === undefined ||  typeof(window.$)===undefined || typeof($.ajax)!=="function"){
         await sleep(300)
     }
-
     console.log("jQuery loaded.")
 
  }
@@ -62,6 +59,8 @@ function sleep(ms) {
      /* attach to the document head */
      document.getElementsByTagName('head')[0].appendChild(linkElement);
      $("head").append(linkElement)
+     console.log("CSS loaded.")
+
  }
 
 
@@ -79,27 +78,27 @@ function createSteps(){
 
 ///ajax get all GUID
     const url = "https://guidedlearning.oracle.com/player/latest/api/scenario/get/v_IlPvRLRWObwLnV5sTOaw/5szm2kaj/?callback=__5szm2kaj&refresh=true&env=dev&type=startPanel&vars%5Btype%5D=startPanel&sid=none&_=1582203987867"
-
     $.ajax({
         url:url,
         dataType:'jsonp',
         success:(data)=>{
-
             const jsonData = data.data.structure.steps
             jsonData.forEach((step)=>{
                 if(JSON.stringify(step.action.contents) === undefined){
                     return
                 }
-
+                // parse the data to a valid structure of json.
                 let content = (JSON.stringify(step.action.contents).split(":")[1]).slice(0,-4).slice(1)
                 let selector = step.action.selector
                 let placement = step.action.placement
+                // Generate html template
                 const html = getTooltipStr(content,step.id, step.action.classes,placement)
+                // Create new element with the content that coming from html variable and append it to body.
                 const divEl = document.createElement('div')
                 divEl.innerHTML = html
-                selector = selector.replaceAll(/"/g,"'")
-                const formEl = document.body
-                formEl.append(divEl)
+                const bodyEl = document.body
+                bodyEl.append(divEl)
+                // Find the welcome content and turn him to block instead none
                 if(content.includes('Welcome')){
                     $(`#x_${step.id}`).css({
                         position: "absolute",
@@ -109,6 +108,9 @@ function createSteps(){
                         top: 70
                     })
                 }
+                // Replace all double-quotes to single quotes. for selector.
+                selector = selector.replaceAll(/"/g,"'")
+                // Add event listener for selectors that coming from data.
                 $(selector).mouseenter(()=>{
                     $(`#x_${step.id}`).show();
                 })
