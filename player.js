@@ -64,17 +64,6 @@ function sleep(ms) {
 
 
 function createSteps(){
-    //inject css
-    let linkElement = document.createElement('link');
-    /* add attributes */
-    linkElement.setAttribute('rel', 'stylesheet');
-    linkElement.setAttribute('href', 'https://guidedlearning.oracle.com/player/latest/static/css/stTip.css');
-    /* attach to the document head */
-    document.getElementsByTagName('head')[0].appendChild(linkElement);
-    $("head").append(linkElement)
-
-
-
 ///ajax get all GUID
     const url = "https://guidedlearning.oracle.com/player/latest/api/scenario/get/v_IlPvRLRWObwLnV5sTOaw/5szm2kaj/?callback=__5szm2kaj&refresh=true&env=dev&type=startPanel&vars%5Btype%5D=startPanel&sid=none&_=1582203987867"
     $.ajax({
