@@ -1,4 +1,3 @@
-//Inject Jquery
 
 main();
 
@@ -31,13 +30,14 @@ const getTooltipStr = (content,id,classes,placement)=>{
     return html
 }
 
-
+// add sleep func In order not to waste resources. until Jquery load
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
  async function loadJquery(){
-    let jq = document.createElement('script');
+     //Inject Jquery
+     let jq = document.createElement('script');
     jq.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js";
     document.getElementsByTagName('head')[0].appendChild(jq);
     // waiting for jQuery to load.
